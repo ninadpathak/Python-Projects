@@ -69,15 +69,25 @@ HANGMAN = [
     '''
 ]
 
-
+#######################################################
+# Clear - Checks the OS platform and uses the apprproiate
+# clear command
+#######################################################
 def clear():
     if platform == "linux" or platform == "linux2":
         a = system('clear')
     elif platform == "win32":
         a = system('cls')
-# This function adds blanks to the randomly selected word
+
+#######################################################
+# Add Blanks - This function adds blanks to the randomly selected word
 # Returns a dictionary file with a word with blanks, a display word
 # with spaced blanks and the number of blanks
+#
+# Had to add another for loop to count underscores. Not sure why it
+# showed wrong number of underscores making the program stop without letting
+# the game to complete
+#######################################################
 def add_blanks(word):
     total_blanks = len(word) // 2
     word = list(word)  # converting string to list for mutation
@@ -97,8 +107,10 @@ def add_blanks(word):
     display_word = "".join(display_word)
     return {"word": word, "display_word": display_word, "count": count}
 
-
-# Checks the input to see if any of the blanks match the guess
+#######################################################
+# Check Input = Checks the input to see if any of the blanks match the guess. 
+# It
+#######################################################
 def check_input(word, word_blanks, guess):
     word = list(word)
     word_blanks = list(word_blanks)
@@ -116,8 +128,12 @@ def check_input(word, word_blanks, guess):
     data = {"word": word_blanks, "count": count}
     return data
 
-
-# Randomly selects a word from a predefined list file
+#######################################################
+# Get Word - Randomly selects a word from a predefined list file
+# Go ahead and add anything or you can also create a loop of some sort to get
+# words from a file and just assign the word to the variable "words"
+# Everything else will keep working fine as long as "words" is a string
+#######################################################
 def get_word():
     words = ['test', 'testing', 'Ninad', 'anything', 'randomword']
     word = words[randint(0, len(words) - 1)]
@@ -133,8 +149,15 @@ def get_word():
 
     return word_data
 
-
-# Main function - Does a lot of shitz
+#######################################################
+# Main function - Gets the word first and splits the data into
+# different variables. We loop through the game until the variable
+# "tries" becomes 0 which also marks shows the complete 
+# hangman figure. Screen will keep clearing as required so
+# we don't have multiple hangman figures on the screen.
+# If the system function annoys you, just remove add the word "pass"
+# to the clear function so there's not much editing required.
+#######################################################
 def main():
     word = get_word()
     blanks_left = word["total_blanks"]
